@@ -133,8 +133,13 @@ func loadArticles() {
 		if i > 0 {
 			v.Prev = Ei.Articles[i-1]
 		}
-		if Ei.Articles[i+1].ID >= setting.Conf.General.StartID {
-			v.Next = Ei.Articles[i+1]
+		//避免下标越界
+		d := i+1
+		if i+1 == len(Ei.Articles){
+			d=i
+		}
+		if Ei.Articles[d].ID >= setting.Conf.General.StartID {
+			v.Next = Ei.Articles[d]
 		}
 		upArticle(v, false)
 	}
