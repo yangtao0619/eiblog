@@ -9,6 +9,8 @@ import (
 	"github.com/eiblog/eiblog/setting"
 	"github.com/qiniu/api.v7/auth/qbox"
 	"github.com/qiniu/api.v7/storage"
+	"github.com/deepzz0/logd"
+	"golang.org/x/net/context"
 )
 
 // 进度条
@@ -26,7 +28,7 @@ func FileUpload(name string, size int64, data io.Reader) (string, error) {
 	if setting.Conf.Qiniu.AccessKey == "" || setting.Conf.Qiniu.SecretKey == "" {
 		return "", errors.New("qiniu config error")
 	}
-
+	logd.Info("data is", data)
 	key := getKey(name)
 	mac := qbox.NewMac(setting.Conf.Qiniu.AccessKey, setting.Conf.Qiniu.SecretKey)
 	// 设置上传的策略
@@ -41,19 +43,24 @@ func FileUpload(name string, size int64, data io.Reader) (string, error) {
 	// 上传配置
 	cfg := &storage.Config{
 		Zone:     &storage.ZoneHuadong,
-		UseHTTPS: true,
 	}
+
+	// 是否使用https域名
+	cfg.UseHTTPS = false
+	// 上传是否使用CDN上传加速
+	cfg.UseCdnDomains = false
+
 	// uploader
 	uploader := storage.NewFormUploader(cfg)
 	ret := new(storage.PutRet)
 	putExtra := &storage.PutExtra{}
 
-	err := uploader.Put(nil, ret, upToken, key, data, size, putExtra)
+	err := uploader.Put(context.Background(), ret, upToken, key, data, size, putExtra)
 	if err != nil {
 		return "", err
 	}
 
-	url := "https://" + setting.Conf.Qiniu.Domain + "/" + key
+	url := "http://" + setting.Conf.Qiniu.Domain + "/" + key
 	return url, nil
 }
 

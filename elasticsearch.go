@@ -6,8 +6,7 @@ import (
 	"errors"
 	"fmt"
 	"io/ioutil"
-	"net"
-	"net/http"
+		"net/http"
 	"regexp"
 	"strings"
 	"time"
@@ -32,13 +31,16 @@ var (
 
 // 初始化 Elasticsearch 服务器
 func init() {
-	_, err := net.LookupIP("elasticsearch")
+	/*_, err := net.LookupIP("elasticsearch")
 	if err != nil {
 		logd.Info(err)
 		return
-	}
+	}*/
 
-	es = &ElasticService{url: "http://elasticsearch:9200", c: new(http.Client)}
+	es = &ElasticService{url: "http://127.0.0.1:9200", c: new(http.Client)}
+	if es == nil{
+		panic("es init failed!")
+	}
 	initIndex()
 }
 

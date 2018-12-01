@@ -53,6 +53,7 @@ func Redirect(c *gin.Context) bool {
 		if strings.Contains(c.Request.Host, ":") {
 			port = fmt.Sprintf(":%d", setting.Conf.Mode.HttpsPort)
 		}
+		fmt.Println("重定向:domain", setting.Conf.Mode.Domain, "port", port, "uri", c.Request.RequestURI)
 		c.Redirect(http.StatusMovedPermanently, "https://"+setting.Conf.Mode.Domain+port+c.Request.RequestURI)
 		return true
 	}

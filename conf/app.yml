@@ -55,10 +55,10 @@ google:
   t: pageview
 # 七牛CDN
 qiniu:
-  bucket: eiblog
-  domain: st.deepzz.com
-  accesskey: MB6AXl_Sj_mmFsL-Lt59Dml2Vmy2o8XMmiCbbSeC
-  secretkey: BIrMy0fsZ0_SHNceNXk3eDuo7WmVYzj2-zrmd5Tf
+  bucket: yangtaotech
+  domain: yangtaotech.cn.qiniudns.com
+  accesskey: sAr1slnfjNqDeNkbhx-xQZCtALII3zjycBgJT1UU
+  secretkey: PiadN3XTkezX7uyPOCDwlcOzKik98nTd2IPf8C7Y
 # 运行模式
 mode:
   # http server
