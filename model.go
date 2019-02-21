@@ -97,6 +97,8 @@ type Article struct {
 	Slug string
 	// 评论数量
 	Count int
+	// 浏览数量
+	ViewCount int
 	// markdown文档
 	Content string
 	// 归属专题
